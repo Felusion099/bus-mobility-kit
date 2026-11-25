@@ -1,0 +1,16 @@
+{
+  "name": "bus-mobility-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intelligent Bus Mobility & Crowdedness-Aware Journey Planner (Delhi)",
+  "scripts": {
+    "install": "pnpm install",
+    "typecheck": "pnpm --filter @delhi-transport/backend typecheck && pnpm --filter delhi-journey-planner-frontend typecheck",
+    "lint": "pnpm --filter @delhi-transport/backend lint && pnpm --filter delhi-journey-planner-frontend lint",
+    "test": "pnpm --filter @delhi-transport/backend test && pnpm --filter delhi-journey-planner-frontend test",
+    "build": "pnpm --filter @delhi-transport/backend build && pnpm --filter delhi-journey-planner-frontend build",
+    "contract:check": "node scripts/check-openapi-compatibility.js",
+    "dev": "pnpm --filter @delhi-transport/backend dev && pnpm --filter delhi-journey-planner-frontend dev"
+  },
+  "devDependencies": {}
+}
