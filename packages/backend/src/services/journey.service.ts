@@ -348,7 +348,7 @@ export class JourneyService {
       totalDurationMinutes: totalDuration,
       totalWalkingDistanceMeters: totalWalkMeters,
       transfers: 0,
-      fareInRupees: 15,
+      fareInRupees: 15, // default fare; will be enhanced with real fare data
       departureTime: departureIso,
       estimatedArrivalTime: arrivalIso,
       problem1TravelTimeMetrics: problem1Metrics,
@@ -509,7 +509,7 @@ export class JourneyService {
       totalDurationMinutes: totalDuration,
       totalWalkingDistanceMeters: totalWalkMeters,
       transfers: 1,
-      fareInRupees: 30,
+      fareInRupees: 30, // default combined fare
       departureTime: departureIso,
       estimatedArrivalTime: arrivalIso,
       problem1TravelTimeMetrics: problem1Metrics,
