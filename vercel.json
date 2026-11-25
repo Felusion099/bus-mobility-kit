@@ -1,0 +1,8 @@
+{
+  "buildCommand": "pnpm install && pnpm --filter delhi-journey-planner-frontend build",
+  "outputDirectory": "packages/frontend/dist",
+  "framework": "vite",
+  "installCommand": "pnpm install",
+  "devCommand": "pnpm --filter delhi-journey-planner-frontend dev",
+  "crons": []
+}
