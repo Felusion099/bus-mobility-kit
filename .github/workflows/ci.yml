@@ -1,0 +1,87 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  governance-and-policy:
+    name: Governance & Policy Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify required policy files exist
+        run: |
+          test -f AGENTS.md
+          test -f SOUL.md
+          test -f coordination/FILE_OWNERSHIP.md
+          test -f governance/INTEGRATION_ACCEPTANCE_POLICY.md
+          test -f governance/API_CONTRACT_POLICY.md
+          test -f governance/DEPENDENCY_POLICY.md
+
+  openapi-contracts:
+    name: OpenAPI Contract Reconciliation & Compatibility Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Verify OpenAPI 3.1.0 Contracts
+        run: pnpm contract:check
+
+  application-ci:
+    name: Monorepo Build, Typecheck, Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate Prisma Client
+        run: pnpm prisma:generate
+
+      - name: Run Linting
+        run: pnpm lint
+
+      - name: Run Type Checking
+        run: pnpm typecheck
+
+      - name: Run Unit & Integration Tests
+        run: pnpm test
+
+      - name: Build Monorepo Packages
+        run: pnpm build
